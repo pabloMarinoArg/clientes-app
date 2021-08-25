@@ -26,7 +26,7 @@
                   <td>{{cliente.nombre}}</td>
                   <td>{{cliente.apellido}}</td>
                   <td>{{cliente.email}}</td>
-                  <td>{{cliente.createAt}}</td>
+                  <td>{{cliente.createAt}}</td> <!--<td>{{cliente.createAt | date:"EEEE dd, MMMM yyyy"}}</td>-->
                   <td>
                       <button type="button" name="button" class="btn btn-primary" [routerLink]="['/clientes/form',cliente.id]">Modificar</button>
                   </td>
@@ -36,6 +36,6 @@
                 </tr>
           </tbody>
       </table>
-
+      <paginator-nav *ngIf="paginador" [paginador]="paginador"></paginator-nav>
     </div>
   </div>

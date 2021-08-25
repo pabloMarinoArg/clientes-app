@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Cliente } from './cliente';
 import { ClienteService } from './cliente.service';
 import swal from 'sweetalert2';
+import { ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -10,12 +11,23 @@ import swal from 'sweetalert2';
   
 })
 export class ClienteComponent implements OnInit {
-
-  constructor(private clienteService: ClienteService) { }
+  
+  paginador:any;
+  constructor(private clienteService: ClienteService,
+              private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.clienteService.getListaClientes().subscribe(
-      clientes => this.clientes = clientes
+    
+    this.activatedRoute.paramMap.subscribe( params =>{
+    let page:number = +params.get('page');
+    if(!page){
+      page=0;
+    }
+    this.clienteService.getListaClientes(page).subscribe(
+      response => {this.clientes = response.content as Cliente[];
+                  this.paginador = response;}
+    );
+  }
     );
   }
 
